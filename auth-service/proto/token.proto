@@ -1,0 +1,26 @@
+
+syntax = "proto3";
+package token;
+option go_package = "egnite.app/microservices/authentication/proto/token";
+
+import "google/api/annotations.proto";
+
+message RefreshTokenRequest {
+  string accessToken = 1;
+  string id = 2;
+}
+
+message RefreshTokenResponse {
+  string accessToken = 1;
+  bool success = 3;
+  string err = 4;
+}
+
+service TokenService {
+  rpc RefreshToken(RefreshTokenRequest) returns (RefreshTokenResponse) {
+    option (google.api.http) = {
+      post: "/api/v1/auth/refreshtoken/{id}"
+      body: "*"
+    };
+  }
+}
